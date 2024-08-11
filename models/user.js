@@ -1,13 +1,12 @@
 const mongoose = require('mongoose');
 
 const foodSchema = new mongoose.Schema({
-  name: String,
-  delicious: Boolean,
-  required: true,
+  name: {type: String, required: true},
+  delicious: {type: String, required: true}
 })
 
 
-const userSchema = mongoose.Schema({
+const userSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
@@ -21,5 +20,5 @@ const userSchema = mongoose.Schema({
 });
 
 const User = mongoose.model('User', userSchema);
-
-module.exports = User;
+const Food = mongoose.model('Food', foodSchema)
+module.exports = User, Food;
