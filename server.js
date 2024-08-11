@@ -30,7 +30,9 @@ app.use(
     saveUninitialized: true,
   })
 );
+app.use(passUserToView)
 app.use('/auth', authController);
+app.use(isSignedIn)
 app.use('/users/:userId/foods',foodsController);
 
 
