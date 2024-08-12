@@ -7,7 +7,11 @@ const User = require('../models/user.js');
 
 //Index
 router.get('/', async (req, res) => {
-    res.render('foods/index.ejs')
+    const userPantry = await User.findOne({_id: req.params.id}).populate('pantry')
+    console.log('Working?')
+    res.render('foods/index.ejs', {
+        items: userPantry,
+    })
 })
 
 //New
