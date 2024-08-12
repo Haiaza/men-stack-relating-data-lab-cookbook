@@ -22,7 +22,7 @@ mongoose.connection.on('connected', () => {
 
 app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));
-// app.use(morgan('dev'));
+app.use(morgan('dev'));
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -55,10 +55,3 @@ app.get('/vip-lounge', (req, res) => {
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);
 });
-
-
-//* Routes
-
-app.get('/usersId/foods', async (req, res) => {
-  await res.send('Test complete')
-})

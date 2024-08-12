@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const foodSchema = new mongoose.Schema({
   name: {type: String, required: true},
-  delicious: {type: Boolean, required: true}
+  // delicious: {type: Boolean, required: true}
 })
 
 
@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  pantry: foodSchema
+  pantry: [foodSchema]
 
 });
 
