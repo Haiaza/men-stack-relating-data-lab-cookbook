@@ -38,10 +38,13 @@ app.use('/users/:userId/foods',foodsController);
 
 
 app.get('/', (req, res) => {
-  res.render('index.ejs', {
-    user: req.session.user,
-  });
+  res.render('./foods/index.ejs');
 });
+
+// app.get('/new', (req, res) => {
+//   res.render('new.ejs')
+// })
+
 
 app.get('/vip-lounge', (req, res) => {
   if (req.session.user) {
