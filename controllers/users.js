@@ -1,39 +1,40 @@
-const express = require('express');
-const router = express.Router();
+// const express = require('express');
+// const router = express.Router();
 
-const User = require('../models/user.js');
-const Food = require('../models/food.js')
-const { default: mongoose } = require('mongoose');
+// const User = require('../models/user.js');
+// const Food = require('../models//food.js')
+// const { default: mongoose } = require('mongoose');
 
-// Index
-router.get('/', async (req, res) => {
-  try {
-    const users = await User.find();
-    res.render('users/index.ejs', { users });
-  } catch (error) {
-    console.log(error)
-    res.redirect('/')
-  }
-});
+// // Index
+// router.get('/', async (req, res) => {
+//   try {
+//     const user = req.session.user
+//     const foundUser = await User.findById(user._id)
 
-// Show
-router.get('/:userId', async (req, res) => {
-  try {
-    const pageOwner = req.params.userId;
-    const userIdobject = new mongoose.Types.ObjectId(pageOwner)
-    const user = await User.findById(userIdobject)
+//     res.render('users/index.ejs')
+//   } catch (error) {
+    
+//   }
+// });
 
-    if (!user){
-      return res.redirect('/users')
-    }
+// // Show
+// router.get('/:userId', async (req, res) => {
+//   try {
+//     const pageOwner = req.params.userId;
+//     const userIdobject = new mongoose.Types.ObjectId(pageOwner)
+//     const user = await User.findById(userIdobject)
 
-    res.render('users/show.ejs', {
-      user
-    });
-  } catch (error) {
-    console.log(error);
-    res.redirect('/')
-  }
-});
+//     if (!user){
+//       return res.redirect('/users')
+//     }
 
-module.exports = router;
+//     res.render('users/show.ejs', {
+//       user
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     res.redirect('/')
+//   }
+// });
+
+// module.exports = router;

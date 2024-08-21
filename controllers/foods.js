@@ -6,15 +6,16 @@ const User = require('../models/user.js');
 
 // Index
 router.get('/', async (req, res) => {
-  try {
-    const currentUser = await User.findById(req.session.user._id);
-    res.render('foods/index.ejs', {
-      currentUser
-    });
-  } catch (error) {
-    console.log(error)
-    res.redirect('/')
-  }
+    try {
+        const userId = req.session.user._id
+        const user = await User.findById(userId) 
+        res.render('users/index.ejs', { 
+          userPantry: user.pantry
+        })
+}   catch (error) {
+        console.error(error)
+        res.redirect('/')
+}
 });
 
 // New
