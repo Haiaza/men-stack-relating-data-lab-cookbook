@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
   },
   pantry: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Food', required: true
+    ref: 'Food', 
   }
 });
 

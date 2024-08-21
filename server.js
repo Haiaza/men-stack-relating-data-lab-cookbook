@@ -31,11 +31,6 @@ app.use(
     saveUninitialized: true,
   })
 );
-app.get('/', (req, res) => {
-  res.render('./foods/index.ejs', {
-    user: req.session.user
-  });
-});
 
 
 app.use('/auth', authController);
@@ -44,6 +39,12 @@ app.use(isSignedIn);
 app.use('/users/:userId/foods', foodsController);
 // app.use('/users', usersController);
 
+app.get('/', (req, res) => {
+  res.render('./foods/index.ejs', {
+    user: req.session.user,
+    // pantry: req.session.user.pantry
+  });
+});
 
 
 
