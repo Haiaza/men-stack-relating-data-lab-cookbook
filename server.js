@@ -11,6 +11,7 @@ const session = require('express-session');
 
 const authController = require('./controllers/auth.js');
 const foodsController = require('./controllers/foods.js');
+const usersController = require('./controllers/users.js');
 
 const port = process.env.PORT ? process.env.PORT : '3000';
 
@@ -30,16 +31,20 @@ app.use(
     saveUninitialized: true,
   })
 );
-app.use(passUserToView)
-app.use('/auth', authController);
-app.use(isSignedIn)
-app.use('/users/:userId/foods',foodsController);
-
-
-
 app.get('/', (req, res) => {
   res.render('./foods/index.ejs');
 });
+
+
+app.use(passUserToView);
+app.use('/auth', authController);
+app.use(isSignedIn);
+app.use('/users', usersController);
+app.use('/users/:userId/foods', foodsController);
+
+
+
+
 
 // app.get('/new', (req, res) => {
 //   res.render('new.ejs')

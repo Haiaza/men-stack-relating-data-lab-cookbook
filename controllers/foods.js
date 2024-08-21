@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
+const Food = require('..models/p')
 const User = require('../models/user.js');
 
 // Index
@@ -8,7 +9,7 @@ router.get('/', async (req, res) => {
   try {
     const currentUser = await User.findById(req.session.user._id);
     res.render('foods/index.ejs', {
-      pantry: currentUser.pantry,
+      currentUser
     });
   } catch (error) {
     console.log(error)

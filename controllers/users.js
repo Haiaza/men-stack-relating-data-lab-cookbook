@@ -2,12 +2,14 @@ const express = require('express');
 const router = express.Router();
 
 const User = require('../models/user.js');
+const Food = require('../models')
+const { default: mongoose } = require('mongoose');
 
 // Index
 router.get('/', async (req, res) => {
   try {
-    const allUsers = await User.find();
-    res.render('users/index.ejs', { allUsers });
+    const users = await User.find();
+    res.render('users/index.ejs', { users });
   } catch (error) {
     console.log(error)
     res.redirect('/')
@@ -17,9 +19,16 @@ router.get('/', async (req, res) => {
 // Show
 router.get('/:userId', async (req, res) => {
   try {
-    const pageOwner = await User.findById(req.params.userId);
+    const pageOwner = req.params.userId;
+    const userIdobject = new mongoose.Types.ObjectId(pageOwner)
+    const user = await User.findById(userIdobject)
+
+    if (!user){
+      return res.redirect('/users')
+    }
+
     res.render('users/show.ejs', {
-      pageOwner
+      user
     });
   } catch (error) {
     console.log(error);
