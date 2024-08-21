@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const User = require('../models/user.js');
-const Food = require('../models')
+const Food = require('../models/food.js')
 const { default: mongoose } = require('mongoose');
 
 // Index

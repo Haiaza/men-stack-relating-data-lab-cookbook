@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const Food = require('..models/p')
+const Food = require('../models/food.js')
 const User = require('../models/user.js');
 
 // Index

@@ -36,11 +36,11 @@ app.get('/', (req, res) => {
 });
 
 
-app.use(passUserToView);
 app.use('/auth', authController);
+app.use(passUserToView);
 app.use(isSignedIn);
-app.use('/users', usersController);
 app.use('/users/:userId/foods', foodsController);
+app.use('/users', usersController);
 
 
 
