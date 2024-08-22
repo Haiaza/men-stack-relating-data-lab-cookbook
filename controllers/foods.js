@@ -7,45 +7,54 @@ const User = require('../models/user.js');
 // Index
 router.get('/', async (req, res) => {
     try {
-        const foods = await Food.find({ pantry: req.session.user._id})
-        res.render('users/index.ejs', { 
-          foods
-        })
-}   catch (error) {
-        console.error(error)
-        res.redirect('/')
-}
-});
-
-// New
-router.get('/new', async (req, res) => {
-  res.render('foods/new.ejs');
-});
-
-// Create
-router.post('/', async (req, res) => {
+      const foods = await Food.find({ pantry: req.session.user._id})
+      res.render('foods/index.ejs', { foods })
+    }   catch (error) {
+      console.error(error)
+      res.redirect('/')
+    }
+  });
+  // Create
+  router.post('/', async (req, res) => {
+    try {
+      const currentUser = await User.findById(req.session.user._id);
+      currentUser.pantry.push(req.body);
+      await currentUser.save();
+      res.redirect(`/users/${currentUser._id}/foods`);
+    } catch (error) {
+      console.log(error);
+      res.redirect('/')
+    }
+  });
+  // New
+  router.get('/new', async (req, res) => {
+    res.render('foods/new.ejs');
+  });
+  
+router.get('/:foodId', async (req, res) => {
   try {
-    const currentUser = await User.findById(req.session.user._id);
-    currentUser.pantry.push(req.body);
-    await currentUser.save();
-    res.redirect(`/users/${currentUser._id}/foods`);
+      const food = await Food.findById(req.params.foodId).populate("pantry")
+              res.render('foods/show.ejs', { food, sessionOwner: req.session.user })
   } catch (error) {
-    console.log(error);
-    res.redirect('/')
+      console.error(error)
+      res.redirect(`/users/${req.session.user._id}/foods`)
   }
 });
+
+
+  
 
 // Edit
 router.get('/:foodId/edit', async (req, res) => {
   try {
-    const currentUser = await User.findById(req.session.user._id);
-    const food = currentUser.pantry.id(req.params.foodId);
-    res.render('foods/edit.ejs', {
-      food: food,
-    });
+    const food = await Food.findById(req.params.foodId);
+    if (!food) {
+      return res.redirect(`/users/${req.session.user._id}/foods`)
+    }
+    res.render('foods/edit.ejs', { food });
   } catch (error) {
-    console.log(error);
-    res.redirect('/')
+    console.error('Error grabbing dish for edit:', error);
+    res.redirect(`/users/${req.session.user._id}/foods`)
   }
 });
 

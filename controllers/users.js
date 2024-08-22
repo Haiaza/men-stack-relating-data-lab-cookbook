@@ -8,12 +8,11 @@ const { default: mongoose } = require('mongoose');
 // Index
 router.get('/', async (req, res) => {
   try {
-    const user = req.session.user
-    const foundUser = await User.findById(user._id)
-
-    res.render('users/index.ejs')
+    const users = await User.find({})
+    res.render('users/index.ejs', { users })
   } catch (error) {
-    
+    console.error(error)
+    res.redirect('/')
   }
 });
 
@@ -28,12 +27,14 @@ router.get('/:userId', async (req, res) => {
       return res.redirect('/users')
     }
 
+    const userDishes = await Food.find({ pantry: pageOwner })
     res.render('users/show.ejs', {
-      user
+      user,
+      dishes: userDishes
     });
   } catch (error) {
     console.log(error);
-    res.redirect('/')
+    res.redirect('/users')
   }
 });
 

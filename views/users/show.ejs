@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= user.username %>'s Paintings
+    </title>
+</head>
+
+<body>
+    <%- include('../partials/_navbar.ejs') %>
+        <h1>
+            <%= user.username %>'s Dishes
+        </h1>
+
+        <ul>
+            <% dishes.forEach(dish => { %>
+                <li>
+                    <a href="/users/<%= user._id %>/paintings/<%= dish._id %>">
+                        <%= dish.name %>
+                    </a>
+                </li>
+                <% }) %>
+        </ul>
+
+        <a class="footer" href="/users">Back to Community</a>
+</body>
+
+</html>

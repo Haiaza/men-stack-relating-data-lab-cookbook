@@ -7,6 +7,7 @@
 </head>
   <body>
     <%- include('../partials/_navbar.ejs') %>
+    <h1>Hello <%= user.username %>, what are we adding?</h1>
     <form action="/users/<%= user._id %>/foods" method="POST">
       <label for="Name">Name:</label>
       <input type="text" name="name" id="name">

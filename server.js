@@ -11,7 +11,7 @@ const session = require('express-session');
 
 const authController = require('./controllers/auth.js');
 const foodsController = require('./controllers/foods.js');
-// const usersController = require('./controllers/users.js');
+const usersController = require('./controllers/users.js');
 
 const port = process.env.PORT ? process.env.PORT : '3000';
 
@@ -21,7 +21,7 @@ mongoose.connection.on('connected', () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
 });
 
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));
 app.use(morgan('dev'));
 app.use(
@@ -37,14 +37,11 @@ app.use('/auth', authController);
 app.use(passUserToView);
 app.use(isSignedIn);
 app.use('/users/:userId/foods', foodsController);
-// app.use('/users', usersController);
+app.use('/users', usersController);
 
 app.get('/', (req, res) => {
-  res.render('./foods/index.ejs', {
-    user: req.session.user,
-    // pantry: req.session.user.pantry
-  });
-});
+  res.render('index.ejs')
+})
 
 
 

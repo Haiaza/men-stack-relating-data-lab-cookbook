@@ -7,27 +7,24 @@
 </head>
 <body>
   <%- include('../partials/_navbar') %>
-  <h1>Welcome to my Pantry</h1>
-  <a href="/users/<%= user._id %>/foods/new">Add New Item</a>
-  <% if(pantry.length) { %>
+  <h1>Welcome <%= user.username %></h1>
+  <h3>Welcome to your Pantry</h3>
   <ul>
-    <% pantry.forEach((food)=>{ %>
+    <% foods.forEach(food => { %>
       <li>
-        <%= food.name %>
-        <a href="/users/<%= user._id %>/foods/<%= food._id %>/edit">
-          Edit
+        <a href="/users/<%= user._id %>/foods/<%= food._id %>">
+          <%= food.name %>
         </a>
-        <form
-          action="/users/<%= user._id %>/foods/<%= food._id %>?_method=DELETE"
-          method="POST"
-        >
+        <form action="/users/<%= user._id %>/foods/<%= food._id %>/edit">
+          <button type="submit">Edit</button>
+        </form>
+        <form action="/users/<%= user._id %>/foods/<%= food._id %>?_method=DELETE" method="POST">
           <button type="submit">Delete</button>
         </form>
       </li>
     <% }) %>
   </ul>
-  <% } else { %>
-    <p>There are no items in this pantry.</p>
-  <% } %>
+  <a href="/users/<%= user._id %>/foods/new">Add New Item</a>
+  
 </body>
 </html>
