@@ -13,21 +13,24 @@ router.get('/', async (req, res) => {
       console.error(error)
       res.redirect('/')
     }
-  });
-  // Create
-  router.post('/', async (req, res) => {
+});
+// Create
+router.post('/', async (req, res) => {
     try {
-      const currentUser = await User.findById(req.session.user._id);
-      currentUser.pantry.push(req.body);
-      await currentUser.save();
+      const {name} = req.body
+      const newFood = new Food({
+        name,
+        pantry: req.session.user._id
+      })
+      await newFood.save();
       res.redirect(`/users/${currentUser._id}/foods`);
     } catch (error) {
       console.log(error);
       res.redirect('/')
     }
   });
-  // New
-  router.get('/new', async (req, res) => {
+// New
+router.get('/new', async (req, res) => {
     res.render('foods/new.ejs');
   });
   
@@ -61,16 +64,12 @@ router.get('/:foodId/edit', async (req, res) => {
 // Update
 router.put('/:foodId', async (req, res) => {
   try {
-    const currentUser = await User.findById(req.session.user._id);
-    const food = currentUser.pantry.id(req.params.foodId);
-    food.set(req.body);
-    await currentUser.save();
-    res.redirect(
-      `/users/${currentUser._id}/foods/`
-    );
+    const { name } = req.body
+    await Food.findByIdAndUpdate(req.params.foodId, { name })
+    res.redirect(`/users/${req.session.user._id}/foods`)
 } catch (error) {
-    console.log(error);
-    res.redirect('/')
+    console.error('Error updating food:', error)
+    res.redirect(`/users/${req.session.user._id}/foods`)
 }
 });
 
